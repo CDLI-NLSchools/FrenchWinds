@@ -1,0 +1,1070 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sciences 1206: Vents planétaires et circulation atmosphérique</title>
+    
+    <!-- KaTeX for scientific notation and units -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js"></script>
+
+    <!-- html2canvas for Brightspace verification proof copy -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background-color: #f0f4f8;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            min-height: 100vh;
+            margin: 0;
+            padding: 24px 14px;
+            box-sizing: border-box;
+            color: #0f172a;
+            -webkit-font-smoothing: antialiased;
+        }
+        .quiz-card {
+            background: #ffffff;
+            border-radius: 16px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.07);
+            width: 100%;
+            max-width: 840px;
+            padding: 28px;
+            box-sizing: border-box;
+            border: 1px solid #cbd5e1;
+            position: relative;
+        }
+        .header-tag {
+            text-align: center;
+            font-size: 0.85em;
+            text-transform: uppercase;
+            font-weight: 700;
+            letter-spacing: 0.08em;
+            color: #0284c7;
+            margin-bottom: 4px;
+        }
+        h2 {
+            text-align: center;
+            color: #0f172a;
+            margin-top: 0;
+            margin-bottom: 16px;
+            font-size: 1.55em;
+            font-weight: 700;
+            letter-spacing: -0.02em;
+        }
+        .score-row {
+            display: flex;
+            justify-content: space-around;
+            font-size: 1.05em;
+            font-weight: 600;
+            margin-bottom: 16px;
+            padding: 10px;
+            background: #f8fafc;
+            border-radius: 8px;
+            border: 1px solid #e2e8f0;
+        }
+        .correct { color: #16a34a; }
+        .incorrect { color: #dc2626; }
+        
+        .graphic-container {
+            border: 1px solid #cbd5e1;
+            border-radius: 12px;
+            padding: 18px 16px;
+            position: relative;
+            background-color: #ffffff;
+            margin-bottom: 18px;
+            min-height: 240px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+        .id-badge {
+            position: absolute;
+            top: 8px;
+            right: 12px;
+            font-size: 11px;
+            color: #94a3b8;
+            font-family: monospace;
+        }
+        .diagram-wrapper {
+            width: 100%;
+            max-width: 600px;
+            height: 200px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 8px;
+        }
+        .diagram-wrapper svg {
+            width: 100%;
+            height: 100%;
+            overflow: visible;
+        }
+        .statement-text {
+            font-size: 1.15em;
+            font-weight: 500;
+            color: #1e293b;
+            line-height: 1.55;
+            margin-top: 6px;
+            padding: 0 10px;
+        }
+
+        .instruction-banner {
+            background-color: #e0f2fe;
+            color: #0369a1;
+            text-align: center;
+            padding: 9px 12px;
+            border-radius: 8px;
+            font-size: 0.92em;
+            font-weight: 600;
+            margin-bottom: 16px;
+            border: 1px solid #bae6fd;
+        }
+        .feedback-banner {
+            text-align: left;
+            padding: 14px 18px;
+            border-radius: 8px;
+            font-size: 0.98em;
+            line-height: 1.55;
+            margin-bottom: 18px;
+            display: none;
+        }
+        .fb-correct {
+            background-color: #dcfce7;
+            color: #14532d;
+            border: 1px solid #86efac;
+        }
+        .fb-incorrect {
+            background-color: #fee2e2;
+            color: #7f1d1d;
+            border: 1px solid #fca5a5;
+        }
+        .button-row {
+            display: flex;
+            gap: 12px;
+            margin-top: 8px;
+            flex-wrap: wrap;
+        }
+        .btn-choice {
+            font-family: inherit;
+            flex: 1;
+            min-width: 200px;
+            padding: 14px 12px;
+            border: none;
+            border-radius: 9px;
+            font-size: 1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            color: white;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+            line-height: 1.35;
+        }
+        .btn-choice:nth-child(1) { background-color: #0284c7; }
+        .btn-choice:nth-child(1):hover { background-color: #0369a1; }
+        
+        .btn-choice:nth-child(2) { background-color: #4f46e5; }
+        .btn-choice:nth-child(2):hover { background-color: #4338ca; }
+
+        .btn-choice:nth-child(3) { background-color: #0d9488; }
+        .btn-choice:nth-child(3):hover { background-color: #0f766e; }
+
+        .btn-next {
+            background-color: #16a34a;
+            color: white;
+            display: none;
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.05em;
+            font-weight: 700;
+            cursor: pointer;
+        }
+        .btn-next:hover { background-color: #15803d; }
+
+        .copy-section {
+            margin-top: 24px;
+            padding-top: 16px;
+            border-top: 1px dashed #cbd5e1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+        }
+        .btn-copy {
+            background-color: #475569;
+            color: white;
+            width: 100%;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            font-size: 0.95em;
+            font-weight: 600;
+            cursor: pointer;
+        }
+        .btn-copy:hover { background-color: #334155; }
+        .copy-hint {
+            font-size: 0.8em;
+            color: #64748b;
+            text-align: center;
+        }
+        .progress-text {
+            text-align: center;
+            font-size: 0.9em;
+            color: #64748b;
+            margin-top: 14px;
+            font-weight: 500;
+        }
+        .completion-box {
+            text-align: center;
+            padding: 24px 12px;
+        }
+        .completion-title {
+            color: #16a34a;
+            font-size: 1.7em;
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="quiz-card" id="quiz-card">
+    <div class="header-tag" id="ui-header-tag">Sciences 1206 • Dynamique météorologique (T.-N.-L.)</div>
+    <h2 id="ui-title">Vents planétaires et circulation atmosphérique</h2>
+    
+    <div class="score-row">
+        <span class="correct"><span id="ui-target-label">Cible de maîtrise :</span> <span id="correct-count">0</span> / 10 <span id="ui-correct-sub">Bonnes réponses</span></span>
+        <span class="incorrect"><span id="ui-incorrect-label">Erreurs :</span> <span id="incorrect-count">0</span></span>
+    </div>
+
+    <div class="graphic-container" id="display-card">
+        <span class="id-badge">ID: <span id="sim-id">---------</span></span>
+        <div class="diagram-wrapper" id="svg-diagram"></div>
+        <div id="statement-display" class="statement-text">Chargement...</div>
+    </div>
+
+    <div id="instruction" class="instruction-banner">Sélectionnez la meilleure réponse ci-dessous.</div>
+
+    <div id="feedback" class="feedback-banner"></div>
+
+    <div class="button-row" id="action-buttons">
+        <button class="btn-choice" id="opt-btn-0" onclick="submitAnswer(0)">Option 1</button>
+        <button class="btn-choice" id="opt-btn-1" onclick="submitAnswer(1)">Option 2</button>
+        <button class="btn-choice" id="opt-btn-2" onclick="submitAnswer(2)">Option 3</button>
+    </div>
+    
+    <div class="button-row" style="margin-top: 12px;">
+        <button id="next-btn" class="btn-next" onclick="loadNextStatement()">Question suivante ➔</button>
+    </div>
+
+    <div class="progress-text" id="progress-display">
+        Cible : Obtenir 10 bonnes réponses pour terminer
+    </div>
+
+    <!-- Always-Visible Copy Proof Button Section for Brightspace -->
+    <div class="copy-section" data-html2canvas-ignore="true">
+        <button id="copy-btn" class="btn-copy" onclick="copyProofToClipboard()">📋 Copier la preuve dans le presse-papiers</button>
+        <span class="copy-hint" id="ui-copy-hint">Cliquez à tout moment pour capturer votre preuve de vérification et la coller (Ctrl+V) dans Brightspace.</span>
+    </div>
+</div>
+
+<script>
+    // =========================================================================
+    // 🇫🇷 DICTIONNAIRE FRANÇAIS COMPLET (TOUS LES TEXTES SONT ISOLÉS ICI)
+    // =========================================================================
+    const APP_TEXT = {
+        ui: {
+            headerTag: "Sciences 1206 • Dynamique météorologique (T.-N.-L.)",
+            title: "Vents planétaires et circulation atmosphérique",
+            targetLabel: "Cible de maîtrise :",
+            correctSub: "Bonnes réponses",
+            incorrectLabel: "Erreurs :",
+            instruction: "Sélectionnez la meilleure réponse ci-dessous.",
+            nextBtn: "Question suivante ➔",
+            masteryBtn: "Voir la preuve finale de maîtrise 🏆",
+            progressText: "Cible : Obtenir 10 bonnes réponses pour terminer",
+            copyBtn: "📋 Copier la preuve dans le presse-papiers",
+            copyHint: "Cliquez à tout moment pour capturer votre preuve de vérification et la coller (Ctrl+V) dans Brightspace.",
+            copyCapturing: "⏳ Capture de la preuve en cours...",
+            copySuccess: "✅ Preuve copiée dans le presse-papiers !",
+            copyAlertError: "Impossible de générer l'image. Veuillez réessayer.",
+            copyAlertBlocked: "L'écriture dans le presse-papiers a été bloquée. Faites une capture d'écran (Win+Maj+S ou Cmd+Maj+4).",
+            copyAlertFailed: "Échec de la capture de la preuve.",
+            feedbackCorrect: "Correct !",
+            feedbackIncorrect: "Incorrect.",
+            commonMistake: "Erreur courante :",
+            keyConcept: "Concept clé :",
+            completionTitle: "🎉 Maîtrise des vents planétaires atteinte !",
+            completionText: "Tu as démontré ta compréhension des angles de rayonnement solaire, des cellules de convection planétaires, des ceintures de vents dominants et des courants-jets en Sciences 1206.",
+            completionTargetScore: "Objectif atteint :",
+            completionAttempts: "Nombre d'essais :",
+            completionAccuracy: "Précision :",
+            completionTargetVal: "10 Bonnes réponses",
+            completionCopyHint: "Clique sur le bouton ci-dessous pour copier ta preuve de vérification et la coller dans Brightspace.",
+            practiceAgain: "Recommencer l'activité 🔄"
+        },
+        diagrams: {
+            solar_angle: {
+                northPole: "90°N (Pôle Nord)",
+                equator: "0° (Équateur)",
+                southPole: "90°S (Pôle Sud)",
+                beam1: "Faisceau 1 (Équateur)",
+                beam2: "Faisceau 2 (60°N)"
+            },
+            coriolis_canada: {
+                country: "CANADA",
+                startAir: "Masse d'air au départ",
+                pathA: "Trajectoire A",
+                pathB: "Trajectoire B",
+                pathC: "Trajectoire C"
+            },
+            nl_wind: {
+                island: "Terre-Neuve",
+                compassN: "N",
+                compassS: "S",
+                compassE: "E",
+                compassW: "O", // Ouest
+                arrowLabel: "Flèche C (Direction du vent)"
+            },
+            wind_belts: {
+                equator: "0° (Équateur)",
+                deg30: "30°N",
+                deg60: "60°N",
+                deg90: "90°N",
+                zoneA: "Zone A (60°-90°N)",
+                zoneB: "Zone B (30°-60°N)",
+                zoneC: "Zone C (0°-30°N)"
+            },
+            vertical_cells: {
+                earth: "Terre",
+                equator: "0° (Équateur)",
+                deg30: "30°N",
+                deg60: "60°N",
+                deg90: "90°N (Pôle)"
+            },
+            jet_stream: {
+                vancouver: "Vancouver (Ouest)",
+                stjohns: "Saint-Jean (Est)",
+                streamTitle: "Courant-jet en haute altitude",
+                planeA: "Avion A ➔",
+                planeB: "⬅ Avion B"
+            }
+        },
+        questions: [
+            // --- BUCKET 1: Solar Angle & Unequal Heating ---
+            {
+                topic: "solar_angle",
+                text: "En observant le schéma, pourquoi le Faisceau 1 réchauffe-t-il la surface terrestre de façon beaucoup plus intense que le Faisceau 2 ?",
+                diagram: "solar_angle",
+                options: [
+                    { text: "Le Faisceau 1 frappe perpendiculairement, concentrant son énergie sur une plus petite surface", correct: true, trap: "" },
+                    { text: "Le Faisceau 1 est des millions de kilomètres plus proche du Soleil que le Faisceau 2", correct: false, trap: "Piège fréquent ! La différence de distance par rapport au Soleil est négligeable ; c'est l'angle de courbure qui répartit l'énergie." },
+                    { text: "Le Faisceau 1 contient des rayons lumineux complètement différents qui n'existent pas à 60°N", correct: false, trap: "Les deux faisceaux émettent des rayons identiques ; seul l'angle d'impact sur la surface change." }
+                ],
+                explanation: "Les deux faisceaux transportent la même quantité d'énergie. Comme la Terre est courbée, le Faisceau 1 frappe directement et concentre sa chaleur, tandis que le Faisceau 2 frappe à angle aigu et disperse son énergie sur une zone plus vaste."
+            },
+            {
+                topic: "solar_angle",
+                text: "Dans le schéma, le Faisceau 1 et le Faisceau 2 ont exactement la même largeur et transportent autant d'énergie. Qu'arrive-t-il au Faisceau 2 lorsqu'il frappe à $60^\\circ\\text{ N}$ ?",
+                diagram: "solar_angle",
+                options: [
+                    { text: "Il frappe à un angle rasant, ce qui étale son énergie sur une surface terrestre plus étendue", correct: true, trap: "" },
+                    { text: "Il rebondit sur l'atmosphère et ne transmet aucune énergie thermique au sol", correct: false, trap: "L'énergie solaire atteint bel et bien le sol, mais elle est diluée sur une surface plus grande." },
+                    { text: "Il se compresse en un point focal brûlant qui crée une chaleur extrême", correct: false, trap: "Des rayons inclinés étalent l'énergie plutôt que de la comprimer." }
+                ],
+                explanation: "En raison de la surface convexe de la Terre, les rayons inclinés se répartissent sur une surface beaucoup plus grande, ce qui produit des températures bien plus froides."
+            },
+            {
+                topic: "solar_angle",
+                text: "Un élève regarde ce schéma et affirme : « L'Équateur est plus chaud parce que la Terre est bombée et se trouve plus proche du Soleil. » Quelle est la véritable explication montrée par le schéma ?",
+                diagram: "solar_angle",
+                options: [
+                    { text: "L'angle des rayons concentre l'énergie à l'Équateur et la disperse près des pôles", correct: true, trap: "" },
+                    { text: "L'élève a entièrement raison ; la distance par rapport au Soleil est la cause principale", correct: false, trap: "Piège : La Terre est à environ 150 millions de km du Soleil. Le léger renflement équatorial ne fait pratiquement aucune différence." },
+                    { text: "L'Équateur est chauffé exclusivement par du magma sous terre et non par le Soleil", correct: false, trap: "C'est l'énergie solaire qui réchauffe l'atmosphère, pas le magma souterrain." }
+                ],
+                explanation: "Le réchauffement dépend de l'angle auquel les rayons solaires frappent la surface sphérique, et non de la distance minime entre les différentes latitudes et le Soleil."
+            },
+            {
+                topic: "solar_angle",
+                text: "En comparant l'endroit où les deux faisceaux frappent la surface courbée, quelle région reçoit la plus forte concentration de chaleur par kilomètre carré ?",
+                diagram: "solar_angle",
+                options: [
+                    { text: "L'Équateur ($0^\\circ$ / Faisceau 1)", correct: true, trap: "" },
+                    { text: "La haute latitude ($60^\\circ\\text{ N}$ / Faisceau 2)", correct: false, trap: "Piège : À 60°N, la courbure étale le faisceau sur une plus grande superficie, diluant la chaleur." },
+                    { text: "Les deux régions reçoivent exactement la même concentration de chaleur", correct: false, trap: "Une même énergie répartie sur des surfaces inégales donne des concentrations thermiques différentes." }
+                ],
+                explanation: "Les rayons directs à l'Équateur fournissent le maximum d'énergie par kilomètre carré car ils frappent perpendiculairement le sol."
+            },
+
+            // --- BUCKET 2: Global Convection & Pressure Differences ---
+            {
+                topic: "global_convection",
+                text: "À $0^\\circ$ (Équateur), la flèche montre que l'air chaud s'élève. Quel type de ceinture de pression cette masse d'air ascendante laisse-t-elle à la surface ?",
+                diagram: "vertical_cells",
+                options: [
+                    { text: "Une ceinture de Basse pression", correct: true, trap: "" },
+                    { text: "Une ceinture de Haute pression", correct: false, trap: "Piège : L'air qui monte allège le poids exercé sur le sol, ce qui crée une Basse pression." },
+                    { text: "Une pression atmosphérique totalement nulle (le vide)", correct: false, trap: "Une basse pression contient toujours de l'air ; sa densité est simplement inférieure à l'air environnant." }
+                ],
+                explanation: "Lorsque l'air réchauffé s'élève à l'Équateur, il réduit le poids exercé sur la surface, créant la ceinture de basses pressions équatoriales."
+            },
+            {
+                topic: "global_convection",
+                text: "À $90^\\circ\\text{ N}$ (Pôle Nord), la flèche montre que l'air froid et dense descend vers la Terre. Quel type de pression de surface cela produit-il ?",
+                diagram: "vertical_cells",
+                options: [
+                    { text: "Une ceinture de Haute pression", correct: true, trap: "" },
+                    { text: "Une ceinture de Basse pression", correct: false, trap: "Piège : L'air qui descend et s'accumule au sol comprime la surface, créant une Haute pression." },
+                    { text: "Une pression instable provoquant des ouragans constants", correct: false, trap: "La haute pression polaire est caractérisée par un air calme, lourd et sec." }
+                ],
+                explanation: "L'air polaire très froid et dense s'enfonce vers le sol et s'y accumule, formant la ceinture de hautes pressions polaires."
+            },
+            {
+                topic: "global_convection",
+                text: "Les vents de surface soufflent naturellement des Hautes pressions vers les Basses pressions. Dans quelle direction l'air de surface se déplacera-t-il entre $90^\\circ\\text{ N}$ (Haute) et $60^\\circ\\text{ N}$ (Basse) ?",
+                diagram: "vertical_cells",
+                options: [
+                    { text: "De $90^\\circ\\text{ N}$ vers le sud en direction de $60^\\circ\\text{ N}$", correct: true, trap: "" },
+                    { text: "De $60^\\circ\\text{ N}$ vers le nord en direction de $90^\\circ\\text{ N}$", correct: false, trap: "Piège fréquent : L'air se déplace de la HAUTE pression ($90^\\circ$) vers la BASSE pression ($60^\\circ$), jamais l'inverse !" },
+                    { text: "L'air ne bougera aucunement à l'horizontale", correct: false, trap: "Les écarts de pression atmosphérique forcent continuellement l'air à se déplacer horizontalement." }
+                ],
+                explanation: "Puisque l'air s'écoule des hautes vers les basses pressions, l'air dense du Pôle Nord ($90^\circ\text{ N}$) souffle vers le sud vers la dépression subpolaire ($60^\circ\text{ N}$)."
+            },
+            {
+                topic: "global_convection",
+                text: "En observant les flèches du schéma, à quelles deux latitudes l'air MONTE-t-il principalement (ascendance) loin de la surface terrestre ?",
+                diagram: "vertical_cells",
+                options: [
+                    { text: "À l'Équateur ($0^\\circ$) et à $60^\\circ\\text{ N}$", correct: true, trap: "" },
+                    { text: "À $30^\\circ\\text{ N}$ et à $90^\\circ\\text{ N}$", correct: false, trap: "Piège : Regarde les flèches à 30°N et 90°N : elles pointent vers l'intérieur, indiquant un air qui descend." },
+                    { text: "L'air ne monte qu'à $90^\\circ\\text{ N}$", correct: false, trap: "À 90°N, l'air froid descend." }
+                ],
+                explanation: "L'air monte à $0^\circ$ (convection thermique chaude) et à $60^\circ\text{ N}$ (soulèvement de l'air tempéré au-dessus de l'air polaire froid)."
+            },
+
+            // --- BUCKET 3: The Coriolis Effect & Wind Naming Rules ---
+            {
+                topic: "coriolis_naming",
+                text: "Une masse d'air part du sud du Canada et commence à se déplacer vers le nord. En raison de l'effet de Coriolis, quelle trajectoire empruntera-t-elle ?",
+                diagram: "coriolis_canada",
+                options: [
+                    { text: "La Trajectoire C (déviation vers sa droite / l'Est)", correct: true, trap: "" },
+                    { text: "La Trajectoire A (déviation vers sa gauche / l'Ouest)", correct: false, trap: "Piège ! Dans l'hémisphère Nord, tout corps en mouvement est dévié vers sa DROITE." },
+                    { text: "La Trajectoire B (en ligne droite absolue vers le Nord)", correct: false, trap: "La rotation de la Terre empêche les masses d'air de suivre une trajectoire strictement rectiligne." }
+                ],
+                explanation: "Dans l'hémisphère Nord, la rotation de la Terre dévie les vents vers la droite de leur mouvement. Un vent filant vers le nord tourne donc vers l'est (Trajectoire C)."
+            },
+            {
+                topic: "coriolis_naming",
+                text: "Quel phénomène physique terrestre force l'air en déplacement à suivre la Trajectoire C plutôt que la ligne droite B au-dessus du Canada ?",
+                diagram: "coriolis_canada",
+                options: [
+                    { text: "La rotation quotidienne de la Terre sur son axe", correct: true, trap: "" },
+                    { text: "L'attraction gravitationnelle de la Lune sur l'air", correct: false, trap: "La Lune est responsable des marées océaniques, pas de l'effet de Coriolis." },
+                    { text: "L'inclinaison de l'axe terrestre causant les saisons", correct: false, trap: "L'inclinaison crée les saisons ; la rotation quotidienne crée l'effet de Coriolis." }
+                ],
+                explanation: "Pendant que l'air se déplace, la surface terrestre tourne sous lui d'ouest en est, produisant la déviation apparente de Coriolis."
+            },
+            {
+                topic: "coriolis_naming",
+                text: "Si une masse d'air commençait à se déplacer vers le nord dans l'hémisphère Sud (ex. en Amérique du Sud), comment sa déviation se comparerait-elle à celle du Canada ?",
+                diagram: "coriolis_canada",
+                options: [
+                    { text: "Elle dévierait vers sa gauche (comme la Trajectoire A) au lieu de sa droite", correct: true, trap: "" },
+                    { text: "Elle dévierait vers sa droite (comme la Trajectoire C) exactement comme au Canada", correct: false, trap: "Piège : L'effet de Coriolis s'inverse d'un hémisphère à l'autre ! Il dévie vers la GAUCHE au Sud." },
+                    { text: "Elle ne subirait aucune déviation", correct: false, trap: "Les deux hémisphères subissent l'effet de Coriolis, mais en sens opposé." }
+                ],
+                explanation: "L'effet de Coriolis dévie les vents vers la droite dans l'hémisphère Nord, et vers la gauche dans l'hémisphère Sud."
+            },
+            {
+                topic: "coriolis_naming",
+                text: "Un bateau de pêche au large de la côte sud de Terre-Neuve signale un vent soufflant comme l'indique la Flèche C. Quel est le nom officiel de ce vent ?",
+                diagram: "nl_wind",
+                options: [
+                    { text: "Un vent d'ouest (soufflant de l'Ouest vers l'Est)", correct: true, trap: "" },
+                    { text: "Un vent d'est (soufflant de l'Est vers l'Ouest)", correct: false, trap: "Piège : Regarde la pointe de la flèche : elle va vers l'Est, ce qui signifie que l'air PROVIENT de l'Ouest !" },
+                    { text: "Un vent du nord", correct: false, trap: "La Flèche C souffle le long de l'axe horizontal Ouest-Est." }
+                ],
+                explanation: "Puisque la Flèche C provient de l'Ouest pour se diriger vers l'Est, les météorologues le désignent comme un vent d'ouest."
+            },
+            {
+                topic: "coriolis_naming",
+                text: "Si le bulletin météo d'Environnement Canada pour Terre-Neuve annonce un « vent du nord », qu'est-ce que cela signifie concrètement ?",
+                diagram: "nl_wind",
+                options: [
+                    { text: "Le vent souffle DEPUIS le Nord et se déplace vers le Sud", correct: true, trap: "" },
+                    { text: "Le vent souffle DEPUIS le Sud et se déplace vers le Nord", correct: false, trap: "Piège : Les vents portent toujours le nom de la direction d'où ils VIENNENT, pas où ils vont !" },
+                    { text: "Le vent ne souffle que pendant la saison hivernale", correct: false, trap: "Le nom du vent décrit son origine géographique." }
+                ],
+                explanation: "En science, les vents sont toujours nommés d'après leur direction de provenance. Un vent du nord souffle du nord vers le sud."
+            },
+
+            // --- BUCKET 4: Three Major Surface Wind Belts ---
+            {
+                topic: "wind_belts",
+                text: "Quelle zone du globe (Zone A, B ou C) représente les Vents d'ouest dominants qui traversent le Canada et Terre-Neuve ?",
+                diagram: "wind_belts",
+                options: [
+                    { text: "Zone B ($30^\\circ - 60^\\circ\\text{ N}$)", correct: true, trap: "" },
+                    { text: "Zone C ($0^\\circ - 30^\\circ\\text{ N}$)", correct: false, trap: "Piège : La Zone C représente les vents alizés tropicaux." },
+                    { text: "Zone A ($60^\\circ - 90^\\circ\\text{ N}$)", correct: false, trap: "Piège : La Zone A représente les vents d'est polaires." }
+                ],
+                explanation: "Les vents d'ouest dominants occupent les latitudes moyennes entre $30^\circ\text{ N}$ et $60^\circ\text{ N}$ (Zone B) et guident la météo au Canada."
+            },
+            {
+                topic: "wind_belts",
+                text: "Quelle zone du globe représente les Vents alizés, qui soufflent régulièrement vers le sud-ouest en direction de l'équateur ?",
+                diagram: "wind_belts",
+                options: [
+                    { text: "Zone C ($0^\\circ - 30^\\circ\\text{ N}$)", correct: true, trap: "" },
+                    { text: "Zone B ($30^\\circ - 60^\\circ\\text{ N}$)", correct: false, trap: "La Zone B contient les vents d'ouest tempérés." },
+                    { text: "Zone A ($60^\\circ - 90^\\circ\\text{ N}$)", correct: false, trap: "La Zone A correspond aux régions arctiques." }
+                ],
+                explanation: "Les vents alizés soufflent entre $0^\circ$ et $30^\circ\text{ N}$ (Zone C), déviés vers le sud-ouest par la force de Coriolis."
+            },
+            {
+                topic: "wind_belts",
+                text: "Quelle zone du globe représente les Vents d'est polaires, apportant l'air glacial de l'Arctique depuis l'est ?",
+                diagram: "wind_belts",
+                options: [
+                    { text: "Zone A ($60^\\circ - 90^\\circ\\text{ N}$)", correct: true, trap: "" },
+                    { text: "Zone B ($30^\\circ - 60^\\circ\\text{ N}$)", correct: false, trap: "La Zone B est celle des vents d'ouest tempérés." },
+                    { text: "Zone C ($0^\\circ - 30^\\circ\\text{ N}$)", correct: false, trap: "La Zone C est celle des alizés tropicaux." }
+                ],
+                explanation: "Les vents d'est polaires soufflent sur les hautes latitudes nord entre $60^\circ\text{ N}$ et $90^\circ\text{ N}$ (Zone A)."
+            },
+            {
+                topic: "wind_belts",
+                text: "En observant la flèche courbée dans la Zone B ($30^\\circ - 60^\\circ\\text{ N}$), pourquoi les tempêtes traversent-elles généralement le Canada pour sortir vers Terre-Neuve ?",
+                diagram: "wind_belts",
+                options: [
+                    { text: "Les vents dominants s'y courbent du sud-ouest vers le nord-est", correct: true, trap: "" },
+                    { text: "Les vents alizés poussent les tempêtes d'ouest en est à travers l'Arctique", correct: false, trap: "Les alizés sont dans les tropiques (Zone C) et soufflent vers l'ouest." },
+                    { text: "Les vents de la Zone B soufflent directement vers le sud", correct: false, trap: "La flèche de la Zone B s'élève vers le haut et la droite (le nord-est)." }
+                ],
+                explanation: "La flèche courbée de la Zone B souffle du sud-ouest vers le nord-est, transportant naturellement les systèmes météo d'ouest en est sur l'Atlantique."
+            },
+
+            // --- BUCKET 5: Global Pressure Belts & Calm Zones ---
+            {
+                topic: "pressure_calms",
+                text: "À $30^\\circ\\text{ N}$, la flèche montre que l'air descend vers la surface. Quelles conditions météo cela produit-il généralement ?",
+                diagram: "vertical_cells",
+                options: [
+                    { text: "Un ciel dégagé, un climat très sec et des vents de surface calmes (latitudes des chevaux / déserts)", correct: true, trap: "" },
+                    { text: "Des blizzards constants et des pluies diluviennes ininterrompues", correct: false, trap: "Piège : L'air descendant se réchauffe et empêche les nuages de se former ; il ne crée pas de pluie." },
+                    { text: "Une dépression extrême accompagnée de tornades", correct: false, trap: "L'air qui descend forme une HAUTE pression, signe de temps calme." }
+                ],
+                explanation: "L'air descendant à $30^\circ\text{ N}$ se comprime et se réchauffe, évaporant les nuages et créant les calmes tropicaux et les grands déserts."
+            },
+            {
+                topic: "pressure_calms",
+                text: "Les marins ont jadis surnommé la zone de $0^\\circ$ « le pot-au-noir » (les calmes équatoriaux) car leurs voiliers y restaient bloqués. Pourquoi les vents horizontaux y sont-ils si faibles ?",
+                diagram: "vertical_cells",
+                options: [
+                    { text: "L'air chaud monte à la verticale au lieu de souffler horizontalement le long de l'eau", correct: true, trap: "" },
+                    { text: "La pression de l'air est si lourde qu'elle immobilise la coque des navires", correct: false, trap: "L'équateur est une BASSE pression, et la pression ne freine pas mécaniquement un bateau." },
+                    { text: "L'eau de l'océan gèle solidement à l'Équateur", correct: false, trap: "L'équateur est chaud ; c'est l'absence de vent horizontal qui immobilisait les voiliers." }
+                ],
+                explanation: "À l'Équateur ($0^\circ$), l'énergie solaire intense soulève l'air verticalement par convection, ne laissant que très peu de brise horizontale au niveau de l'eau."
+            },
+            {
+                topic: "pressure_calms",
+                text: "Pourquoi plusieurs des plus grands déserts arides du monde (comme le Sahara) se trouvent-ils autour de $30^\\circ\\text{ N}$ de latitude ?",
+                diagram: "vertical_cells",
+                options: [
+                    { text: "L'air descend à $30^\\circ\\text{ N}$, ce qui le réchauffe et empêche la formation de nuages et de pluie", correct: true, trap: "" },
+                    { text: "L'air monte violemment, provoquant des tempêtes qui lessivent le sol", correct: false, trap: "L'air ascendant crée des pluies (comme à l'équateur) ; c'est l'air descendant qui crée les déserts." },
+                    { text: "La latitude de $30^\\circ\\text{ N}$ ne reçoit aucune lumière solaire de l'année", correct: false, trap: "Les déserts reçoivent un ensoleillement intense ; l'air sec descendant dissipe les nuages." }
+                ],
+                explanation: "L'air qui descend se réchauffe au contact des couches basses, ce qui augmente sa capacité à retenir la vapeur d'eau et fait évaporer les nuages."
+            },
+            {
+                topic: "pressure_calms",
+                text: "À $60^\\circ\\text{ N}$, l'air chaud entre en collision avec l'air polaire glacial. Que se passe-t-il là où cet air s'élève ?",
+                diagram: "vertical_cells",
+                options: [
+                    { text: "L'air est forcé de monter, créant une ceinture de basses pressions tempétueuse (le front polaire)", correct: true, trap: "" },
+                    { text: "L'air descend de façon permanente, créant un désert sans aucun nuage", correct: false, trap: "La flèche à 60°N pointe vers l'extérieur : l'air monte et favorise les nuages et précipitations." },
+                    { text: "L'atmosphère s'arrête complètement de contenir de l'oxygène", correct: false, trap: "C'est une zone de passage fréquente des tempêtes dans l'Atlantique Nord." }
+                ],
+                explanation: "À $60^\circ\text{ N}$, l'air tempéré glisse par-dessus l'air polaire plus dense. Cette montée d'air engendre les dépressions subpolaires du front polaire."
+            },
+            {
+                topic: "pressure_calms",
+                text: "En allant de l'Équateur jusqu'au Pôle Nord ($0^\\circ, 30^\\circ\\text{ N}, 60^\\circ\\text{ N}, 90^\\circ\\text{ N}$), quelle est la séquence alternée des pressions à la surface ?",
+                diagram: "vertical_cells",
+                options: [
+                    { text: "Basse ($0^\\circ$) ➔ Haute ($30^\\circ\\text{ N}$) ➔ Basse ($60^\\circ\\text{ N}$) ➔ Haute ($90^\\circ\\text{ N}$)", correct: true, trap: "" },
+                    { text: "Haute ($0^\\circ$) ➔ Basse ($30^\\circ\\text{ N}$) ➔ Haute ($60^\\circ\\text{ N}$) ➔ Basse ($90^\\circ\\text{ N}$)", correct: false, trap: "Piège : L'air chaud monte à 0°, ce qui en fait une BASSE pression au sol, pas une haute !" },
+                    { text: "Toutes les latitudes possèdent en permanence la même Haute pression", correct: false, trap: "Les pressions alternent de façon régulière entre zones de montée (basse) et de descente (haute)." }
+                ],
+                explanation: "Les ceintures de pression s'alternent logiquement : Dépression équatoriale ($0^\circ$) $\\rightarrow$ Anticyclone subtropical ($30^\circ$) $\\rightarrow$ Dépression subpolaire ($60^\circ$) $\\rightarrow$ Anticyclone polaire ($90^\circ$)."
+            },
+
+            // --- BUCKET 6: The Jet Stream & Weather/Aviation ---
+            {
+                topic: "jet_stream",
+                text: "En observant le schéma du courant-jet en altitude, quel vol bénéficiera d'un vent arrière puissant qui raccourcira son temps de trajet ?",
+                diagram: "jet_stream",
+                options: [
+                    { text: "L'Avion A (qui vole vers l'est en direction de Saint-Jean)", correct: true, trap: "" },
+                    { text: "L'Avion B (qui vole vers l'ouest en direction de Vancouver)", correct: false, trap: "Piège : Les courants-jets soufflent d'ouest en est ; l'avion B vole donc directement face au vent (vent de face) !" },
+                    { text: "Les deux avions voleront exactement à la même vitesse sol", correct: false, trap: "Un courant-jet soufflant à plus de 200 km/h modifie considérablement la vitesse par rapport au sol." }
+                ],
+                explanation: "Puisque le courant-jet circule d'ouest en est au Canada, l'avion A reçoit un fort vent arrière qui le propulse, réduisant sa durée de vol."
+            },
+            {
+                topic: "jet_stream",
+                text: "Que subira l'Avion B (qui vole vers l'ouest de Saint-Jean vers Vancouver) en voyageant le long du courant-jet ?",
+                diagram: "jet_stream",
+                options: [
+                    { text: "Un puissant vent de face qui ralentit sa vitesse sol et rallonge son vol", correct: true, trap: "" },
+                    { text: "Un puissant vent arrière qui le pousse plus rapidement vers l'avant", correct: false, trap: "L'avion B vole vers l'ouest, à contre-courant du vent qui file vers l'est." },
+                    { text: "Aucune résistance de l'air d'aucune sorte", correct: false, trap: "Les vents d'altitude dépassent régulièrement 150 à 250 km/h." }
+                ],
+                explanation: "Voler vers l'ouest face à un vent d'est crée un fort vent de face (headwind), ce qui diminue la vitesse sol de l'avion et brûle plus de carburant."
+            },
+            {
+                topic: "jet_stream",
+                text: "Qu'est-ce que le Courant-jet polaire illustré dans le schéma ?",
+                diagram: "jet_stream",
+                options: [
+                    { text: "Un ruban étroit de vents très rapides soufflant d'ouest en est en haute altitude", correct: true, trap: "" },
+                    { text: "Un courant marin chaud de surface qui s'écoule le long de Terre-Neuve", correct: false, trap: "Piège : Les courants comme le Gulf Stream se trouvent dans l'océan, pas dans la haute atmosphère." },
+                    { text: "Une légère brise de mer soufflant sur la plage au niveau du sol", correct: false, trap: "Le courant-jet se situe vers 10 km d'altitude et circule à des vitesses extrêmes." }
+                ],
+                explanation: "Le courant-jet polaire est un ruban de vents d'ouest circulant à très haute vitesse près de la tropopause."
+            },
+            {
+                topic: "jet_stream",
+                text: "Quelle condition fondamentale engendre les vents à grande vitesse du courant-jet au-dessus du Canada ?",
+                diagram: "jet_stream",
+                options: [
+                    { text: "Un fort contraste de température et de pression entre l'air froid polaire et l'air chaud du sud", correct: true, trap: "" },
+                    { text: "La friction des sommets montagneux frottant contre les nuages", correct: false, trap: "Le courant-jet circule bien au-dessus des montagnes, là où la friction est quasi absente." },
+                    { text: "Les vagues de l'océan qui projettent de l'air vers le ciel", correct: false, trap: "Ce sont les forts contrastes thermiques entre masses d'air qui créent ce gradient de pression en altitude." }
+                ],
+                explanation: "La rencontre thermique brutale entre l'air polaire froid et l'air méridional plus chaud génère un puissant gradient de pression en altitude, accélérant le courant-jet."
+            }
+        ]
+    };
+
+    function renderMathSafe() {
+        try {
+            if (window.renderMathInElement) {
+                renderMathInElement(document.getElementById("quiz-card"), {
+                    delimiters: [
+                        {left: "$$", right: "$$", display: true},
+                        {left: "$", right: "$", display: false}
+                    ],
+                    throwOnError: false
+                });
+            }
+        } catch (e) {
+            console.warn("KaTeX non disponible:", e);
+        }
+    }
+
+    const diagrams = {
+        solar_angle: (t) => `
+            <svg viewBox="0 0 450 180">
+                <path d="M 330 15 A 75 75 0 0 0 330 165 Z" fill="#e0f2fe" stroke="#0284c7" stroke-width="2.5"/>
+                <text x="345" y="24" font-size="11" font-weight="700" fill="#0369a1">${t.northPole}</text>
+                <text x="245" y="94" font-size="11" font-weight="700" fill="#0369a1" text-anchor="end">${t.equator}</text>
+                <text x="345" y="162" font-size="11" font-weight="700" fill="#0369a1">${t.southPole}</text>
+                <rect x="30" y="82" width="115" height="16" fill="#fef3c7" stroke="#f59e0b" stroke-dasharray="2,2"/>
+                <line x1="30" y1="82" x2="246" y2="82" stroke="#f59e0b" stroke-width="2.5"/>
+                <polygon points="255,82 245,78 245,86" fill="#f59e0b"/>
+                <line x1="30" y1="98" x2="246" y2="98" stroke="#f59e0b" stroke-width="2.5"/>
+                <polygon points="255,98 245,94 245,102" fill="#f59e0b"/>
+                <text x="87" y="94" font-size="10" font-weight="700" fill="#b45309" text-anchor="middle">${t.beam1}</text>
+                <rect x="30" y="32" width="115" height="16" fill="#fef3c7" stroke="#f59e0b" stroke-dasharray="2,2"/>
+                <line x1="30" y1="32" x2="283" y2="32" stroke="#f59e0b" stroke-width="2.5"/>
+                <polygon points="292,32 282,28 282,36" fill="#f59e0b"/>
+                <line x1="30" y1="48" x2="269" y2="48" stroke="#f59e0b" stroke-width="2.5"/>
+                <polygon points="278,48 268,44 268,52" fill="#f59e0b"/>
+                <text x="87" y="44" font-size="10" font-weight="700" fill="#b45309" text-anchor="middle">${t.beam2}</text>
+            </svg>
+        `,
+
+        coriolis_canada: (t) => `
+            <svg viewBox="0 0 450 180">
+                <path d="M 60 120 L 70 85 L 60 55 L 75 35 L 75 60 L 120 50 L 150 45 L 180 50 L 195 70 L 210 90 L 225 110 L 235 125 L 245 110 L 260 85 L 280 80 L 300 95 L 320 115 L 315 130 L 300 135 L 285 140 L 275 145 L 260 145 L 240 135 L 220 130 L 180 130 L 140 130 L 100 130 L 80 125 Z" fill="#f8fafc" stroke="#475569" stroke-width="1.8"/>
+                <path d="M 270 45 L 290 40 L 305 60 L 285 65 Z" fill="#f8fafc" stroke="#94a3b8" stroke-width="1.2"/>
+                <path d="M 325 120 L 335 115 L 340 125 L 330 132 Z" fill="#f8fafc" stroke="#475569" stroke-width="1.5"/>
+                <text x="175" y="90" font-size="13" font-weight="800" fill="#94a3b8" letter-spacing="3">${t.country}</text>
+                <circle cx="170" cy="130" r="5" fill="#0f172a"/>
+                <text x="170" y="148" font-size="10" font-weight="700" fill="#0f172a" text-anchor="middle">${t.startAir}</text>
+                <path d="M 170 130 Q 165 90 115 75" fill="none" stroke="#dc2626" stroke-width="2.8" stroke-dasharray="4,3"/>
+                <polygon points="107,73 119,70 117,80" fill="#dc2626"/>
+                <text x="105" y="62" font-size="11" font-weight="800" fill="#dc2626">${t.pathA}</text>
+                <line x1="170" y1="130" x2="170" y2="45" stroke="#475569" stroke-width="2.2" stroke-dasharray="3,3"/>
+                <polygon points="170,37 165,49 175,49" fill="#475569"/>
+                <text x="170" y="30" font-size="11" font-weight="800" fill="#475569" text-anchor="middle">${t.pathB}</text>
+                <path d="M 170 130 Q 175 90 235 75" fill="none" stroke="#2563eb" stroke-width="2.8"/>
+                <polygon points="243,73 231,79 233,69" fill="#2563eb"/>
+                <text x="245" y="62" font-size="11" font-weight="800" fill="#2563eb">${t.pathC}</text>
+            </svg>
+        `,
+
+        nl_wind: (t) => `
+            <svg viewBox="0 0 450 180">
+                <g transform="translate(140, 10)">
+                    <path d="M 45 95 L 60 45 L 68 20 L 76 25 L 75 48 L 88 55 L 105 60 L 125 70 L 140 80 L 132 95 L 145 102 L 155 125 L 140 135 L 130 115 L 118 120 L 108 140 L 98 130 L 85 110 L 65 118 L 40 120 L 25 122 L 30 102 Z" fill="#f8fafc" stroke="#334155" stroke-width="2.2"/>
+                    <text x="85" y="90" font-size="11" font-weight="700" fill="#64748b" text-anchor="middle">${t.island}</text>
+                </g>
+                <g transform="translate(65, 55)">
+                    <circle cx="0" cy="0" r="26" fill="#ffffff" stroke="#cbd5e1" stroke-width="1.5"/>
+                    <line x1="0" y1="-22" x2="0" y2="22" stroke="#0f172a" stroke-width="2"/>
+                    <line x1="-22" y1="0" x2="22" y2="0" stroke="#0f172a" stroke-width="2"/>
+                    <text x="0" y="-25" font-size="11" font-weight="800" fill="#0f172a" text-anchor="middle">${t.compassN}</text>
+                    <text x="0" y="34" font-size="11" font-weight="800" fill="#0f172a" text-anchor="middle">${t.compassS}</text>
+                    <text x="26" y="4" font-size="11" font-weight="800" fill="#0f172a">${t.compassE}</text>
+                    <text x="-33" y="4" font-size="11" font-weight="800" fill="#0f172a">${t.compassW}</text>
+                </g>
+                <g transform="translate(170, 155)">
+                    <line x1="0" y1="0" x2="80" y2="0" stroke="#059669" stroke-width="3.5"/>
+                    <polygon points="88,0 76,-6 76,6" fill="#059669"/>
+                    <text x="40" y="-8" font-size="11" font-weight="800" fill="#059669" text-anchor="middle">${t.arrowLabel}</text>
+                </g>
+            </svg>
+        `,
+
+        wind_belts: (t) => `
+            <svg viewBox="0 0 450 180">
+                <circle cx="225" cy="90" r="76" fill="#f8fafc" stroke="#334155" stroke-width="2.5"/>
+                <line x1="149" y1="90" x2="301" y2="90" stroke="#dc2626" stroke-width="2"/>
+                <text x="312" y="94" font-size="11" font-weight="700" fill="#dc2626">${t.equator}</text>
+                <line x1="160" y1="52" x2="290" y2="52" stroke="#64748b" stroke-width="1.8" stroke-dasharray="3,3"/>
+                <text x="312" y="56" font-size="11" font-weight="700" fill="#64748b">${t.deg30}</text>
+                <line x1="184" y1="26" x2="266" y2="26" stroke="#64748b" stroke-width="1.8" stroke-dasharray="3,3"/>
+                <text x="312" y="30" font-size="11" font-weight="700" fill="#64748b">${t.deg60}</text>
+                <text x="225" y="10" font-size="11" font-weight="700" fill="#0f172a" text-anchor="middle">${t.deg90}</text>
+                <path d="M 235 18 Q 230 22 212 24" fill="none" stroke="#1e40af" stroke-width="2.5"/>
+                <polygon points="206,24 216,19 217,27" fill="#1e40af"/>
+                <text x="95" y="24" font-size="12" font-weight="800" fill="#1e40af">${t.zoneA}</text>
+                <path d="M 210 50 Q 215 36 245 32" fill="none" stroke="#047857" stroke-width="3"/>
+                <polygon points="252,32 241,27 242,37" fill="#047857"/>
+                <text x="95" y="48" font-size="12" font-weight="800" fill="#047857">${t.zoneB}</text>
+                <path d="M 240 60 Q 235 76 210 82" fill="none" stroke="#b45309" stroke-width="2.5"/>
+                <polygon points="204,83 214,78 215,86" fill="#b45309"/>
+                <text x="95" y="74" font-size="12" font-weight="800" fill="#b45309">${t.zoneC}</text>
+            </svg>
+        `,
+
+        vertical_cells: (t) => `
+            <svg viewBox="0 0 450 180">
+                <circle cx="290" cy="160" r="90" fill="#f8fafc" stroke="#0f172a" stroke-width="3"/>
+                <text x="290" y="165" font-size="12" font-weight="700" fill="#94a3b8" text-anchor="middle">${t.earth}</text>
+                <line x1="200" y1="160" x2="135" y2="160" stroke="#1e293b" stroke-width="3"/>
+                <polygon points="127,160 139,154 139,166" fill="#1e293b"/>
+                <text x="160" y="178" font-size="11" font-weight="800" fill="#0f172a" text-anchor="middle">${t.equator}</text>
+                <line x1="160" y1="85" x2="204" y2="110" stroke="#1e293b" stroke-width="3"/>
+                <polygon points="211,114 204,103 198,113" fill="#1e293b"/>
+                <text x="145" y="112" font-size="11" font-weight="800" fill="#0f172a">${t.deg30}</text>
+                <line x1="245" y1="82" x2="205" y2="35" stroke="#1e293b" stroke-width="3"/>
+                <polygon points="199,29 203,41 211,34" fill="#1e293b"/>
+                <text x="205" y="20" font-size="11" font-weight="800" fill="#0f172a">${t.deg60}</text>
+                <line x1="290" y1="18" x2="290" y2="62" stroke="#1e293b" stroke-width="3"/>
+                <polygon points="290,70 284,58 296,58" fill="#1e293b"/>
+                <text x="325" y="42" font-size="11" font-weight="800" fill="#0f172a">${t.deg90}</text>
+            </svg>
+        `,
+
+        jet_stream: (t) => `
+            <svg viewBox="0 0 450 180">
+                <line x1="40" y1="145" x2="410" y2="145" stroke="#cbd5e1" stroke-width="4"/>
+                <circle cx="70" cy="145" r="5" fill="#334155"/>
+                <text x="70" y="165" font-size="11" font-weight="700" fill="#334155" text-anchor="middle">${t.vancouver}</text>
+                <circle cx="380" cy="145" r="5" fill="#334155"/>
+                <text x="380" y="165" font-size="11" font-weight="700" fill="#334155" text-anchor="middle">${t.stjohns}</text>
+                <path d="M 40 70 C 130 110 180 35 270 70 C 330 95 370 50 420 65" fill="none" stroke="#0284c7" stroke-width="9" stroke-linecap="round"/>
+                <path d="M 40 70 C 130 110 180 35 270 70 C 330 95 370 50 420 65" fill="none" stroke="#bae6fd" stroke-width="3" stroke-dasharray="6,4"/>
+                <text x="225" y="24" font-size="13" font-weight="800" fill="#0369a1" text-anchor="middle">${t.streamTitle}</text>
+                <g transform="translate(140, 50)">
+                    <rect x="0" y="0" width="70" height="22" rx="4" fill="#fef3c7" stroke="#d97706"/>
+                    <text x="35" y="15" font-size="10" font-weight="800" fill="#b45309" text-anchor="middle">${t.planeA}</text>
+                </g>
+                <g transform="translate(250, 75)">
+                    <rect x="0" y="0" width="70" height="22" rx="4" fill="#ede9fe" stroke="#7c3aed"/>
+                    <text x="35" y="15" font-size="10" font-weight="800" fill="#5b21b6" text-anchor="middle">${t.planeB}</text>
+                </g>
+            </svg>
+        `
+    };
+
+    let shuffledQuestions = [];
+    let currentIndex = 0;
+    let correctTotal = 0;
+    let incorrectTotal = 0;
+    const TARGET_CORRECT = 10;
+    let currentShuffledOptions = [];
+
+    function generateId() {
+        const now = new Date();
+        const yearDigit = String(now.getFullYear()).slice(-1);
+        const month = String(now.getMonth() + 1).padStart(2, '0');
+        const day = String(now.getDate()).padStart(2, '0');
+        const randomDigits = String(Math.floor(1000 + Math.random() * 9000));
+        return `GW-${yearDigit}${month}${day}-${randomDigits}`;
+    }
+
+    function shuffleArray(array) {
+        let arr = [...array];
+        for (let i = arr.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [arr[i], arr[j]] = [arr[j], arr[i]];
+        }
+        return arr;
+    }
+
+    function smartShuffleQuestions(bank) {
+        const topics = {};
+        bank.forEach(q => {
+            if (!topics[q.topic]) topics[q.topic] = [];
+            topics[q.topic].push(q);
+        });
+
+        Object.keys(topics).forEach(t => {
+            topics[t] = shuffleArray(topics[t]);
+        });
+
+        const topicKeys = Object.keys(topics);
+        const result = [];
+        let lastTopic = null;
+        let remaining = bank.length;
+
+        while (remaining > 0) {
+            const availableTopics = shuffleArray(topicKeys.filter(t => topics[t].length > 0));
+            let pickedInCycle = false;
+
+            for (const t of availableTopics) {
+                if (t !== lastTopic && topics[t].length > 0) {
+                    result.push(topics[t].pop());
+                    lastTopic = t;
+                    remaining--;
+                    pickedInCycle = true;
+                    break;
+                }
+            }
+
+            if (!pickedInCycle) {
+                for (const t of availableTopics) {
+                    if (topics[t].length > 0) {
+                        result.push(topics[t].pop());
+                        lastTopic = t;
+                        remaining--;
+                        break;
+                    }
+                }
+            }
+        }
+        return result;
+    }
+
+    function initQuiz() {
+        const simIdEl = document.getElementById("sim-id");
+        if (simIdEl) simIdEl.innerText = generateId();
+
+        shuffledQuestions = smartShuffleQuestions(APP_TEXT.questions);
+        currentIndex = 0;
+        correctTotal = 0;
+        incorrectTotal = 0;
+        
+        document.getElementById("correct-count").innerText = "0";
+        document.getElementById("incorrect-count").innerText = "0";
+        
+        const nextBtn = document.getElementById("next-btn");
+        nextBtn.onclick = loadNextStatement;
+
+        document.getElementById("instruction").style.display = "block";
+        document.getElementById("progress-display").style.display = "block";
+        
+        displayCurrentStatement();
+    }
+
+    function displayCurrentStatement() {
+        if (!shuffledQuestions || shuffledQuestions.length === 0) return;
+        const q = shuffledQuestions[currentIndex];
+        const diagDict = APP_TEXT.diagrams[q.diagram] || {};
+        
+        const svgContainer = document.getElementById("svg-diagram");
+        if (svgContainer) {
+            svgContainer.innerHTML = diagrams[q.diagram] ? diagrams[q.diagram](diagDict) : "";
+        }
+
+        const stmtEl = document.getElementById("statement-display");
+        if (stmtEl) stmtEl.innerText = q.text;
+
+        currentShuffledOptions = shuffleArray(q.options);
+
+        for (let i = 0; i < 3; i++) {
+            const btn = document.getElementById(`opt-btn-${i}`);
+            if (btn && currentShuffledOptions[i]) {
+                btn.innerHTML = currentShuffledOptions[i].text;
+                btn.style.display = "inline-block";
+            }
+        }
+
+        document.getElementById("feedback").style.display = "none";
+        document.getElementById("instruction").style.display = "block";
+        document.getElementById("action-buttons").style.display = "flex";
+        document.getElementById("next-btn").style.display = "none";
+
+        renderMathSafe();
+    }
+
+    function submitAnswer(chosenIndex) {
+        const q = shuffledQuestions[currentIndex];
+        const chosen = currentShuffledOptions[chosenIndex];
+        const feedbackEl = document.getElementById("feedback");
+        const instructionEl = document.getElementById("instruction");
+        const actionBtns = document.getElementById("action-buttons");
+        const nextBtn = document.getElementById("next-btn");
+        const u = APP_TEXT.ui;
+
+        instructionEl.style.display = "none";
+        actionBtns.style.display = "none";
+
+        if (chosen.correct) {
+            correctTotal++;
+            document.getElementById("correct-count").innerText = correctTotal;
+            feedbackEl.className = "feedback-banner fb-correct";
+            feedbackEl.innerHTML = `<strong>${u.feedbackCorrect}</strong><br>${q.explanation}`;
+        } else {
+            incorrectTotal++;
+            document.getElementById("incorrect-count").innerText = incorrectTotal;
+            feedbackEl.className = "feedback-banner fb-incorrect";
+            feedbackEl.innerHTML = `<strong>${u.feedbackIncorrect}</strong><br>${chosen.trap ? `<strong>${u.commonMistake}</strong> ${chosen.trap}<br><br>` : ""}<strong>${u.keyConcept}</strong> ${q.explanation}`;
+        }
+
+        feedbackEl.style.display = "block";
+
+        if (correctTotal >= TARGET_CORRECT) {
+            nextBtn.innerText = u.masteryBtn;
+        } else {
+            nextBtn.innerText = u.nextBtn;
+        }
+        nextBtn.style.display = "block";
+
+        renderMathSafe();
+    }
+
+    function loadNextStatement() {
+        if (correctTotal >= TARGET_CORRECT) {
+            showCompletionScreen();
+            return;
+        }
+
+        currentIndex++;
+        if (currentIndex >= shuffledQuestions.length) {
+            shuffledQuestions = smartShuffleQuestions(APP_TEXT.questions);
+            currentIndex = 0;
+        }
+        displayCurrentStatement();
+    }
+
+    function showCompletionScreen() {
+        const u = APP_TEXT.ui;
+        document.getElementById("instruction").style.display = "none";
+        document.getElementById("feedback").style.display = "none";
+        document.getElementById("action-buttons").style.display = "none";
+        document.getElementById("progress-display").style.display = "none";
+        
+        const card = document.getElementById("display-card");
+        const totalAttempts = correctTotal + incorrectTotal;
+        const accuracyPct = Math.round((correctTotal / totalAttempts) * 100);
+
+        card.innerHTML = `
+            <span class="id-badge">ID: <span id="sim-id">${generateId()}</span></span>
+            <div class="completion-box">
+                <div class="completion-title">${u.completionTitle}</div>
+                <p>${u.completionText}</p>
+                <div style="font-size: 1.15em; margin: 16px 0;">
+                    <div>${u.completionTargetScore} <strong>${u.completionTargetVal}</strong></div>
+                    <div>${u.completionAttempts} <strong>${totalAttempts}</strong></div>
+                    <div>${u.completionAccuracy} <strong>${accuracyPct}%</strong></div>
+                </div>
+                <p style="color: #64748b; font-size: 0.9em;">${u.completionCopyHint}</p>
+            </div>
+        `;
+
+        const nextBtn = document.getElementById("next-btn");
+        nextBtn.innerText = u.practiceAgain;
+        nextBtn.style.display = "block";
+        nextBtn.onclick = function() {
+            card.innerHTML = `
+                <span class="id-badge">ID: <span id="sim-id">---------</span></span>
+                <div class="diagram-wrapper" id="svg-diagram"></div>
+                <div id="statement-display" class="statement-text">Chargement...</div>
+            `;
+            initQuiz();
+        };
+    }
+
+    async function copyProofToClipboard() {
+        const copyBtn = document.getElementById('copy-btn');
+        const originalText = copyBtn.innerText;
+        const u = APP_TEXT.ui;
+        copyBtn.innerText = u.copyCapturing;
+        copyBtn.disabled = true;
+
+        try {
+            const simElement = document.getElementById('quiz-card');
+            const canvas = await html2canvas(simElement, {
+                backgroundColor: "#ffffff",
+                scale: 2
+            });
+            
+            canvas.toBlob(async (blob) => {
+                if (!blob) {
+                    alert(u.copyAlertError);
+                    copyBtn.innerText = originalText;
+                    copyBtn.disabled = false;
+                    return;
+                }
+
+                try {
+                    await navigator.clipboard.write([
+                        new ClipboardItem({ 'image/png': blob })
+                    ]);
+                    copyBtn.innerText = u.copySuccess;
+                    setTimeout(() => {
+                        copyBtn.innerText = originalText;
+                        copyBtn.disabled = false;
+                    }, 2500);
+                } catch (err) {
+                    console.error('Clipboard write error:', err);
+                    alert(u.copyAlertBlocked);
+                    copyBtn.innerText = originalText;
+                    copyBtn.disabled = false;
+                }
+            }, 'image/png');
+        } catch (error) {
+            console.error('html2canvas capture error:', error);
+            alert(u.copyAlertFailed);
+            copyBtn.innerText = originalText;
+            copyBtn.disabled = false;
+        }
+    }
+
+    // Direct, immediate startup (works in iframes, Brightspace, local files, and offline)
+    if (document.readyState === 'loading') {
+        document.addEventListener('DOMContentLoaded', initQuiz);
+    } else {
+        initQuiz();
+    }
+</script>
+
+</body>
+</html>
